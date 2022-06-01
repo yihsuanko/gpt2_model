@@ -1,6 +1,6 @@
 # gpt2_model
 
-1. run_clm_loss.py
+1. run_clm.py
 
     - 設定block_size
     - tokenizer_kwargs 增加 model_max_length (注意 block_size 跟 model_max_length)
@@ -12,6 +12,7 @@
     - 繼承 GPT2LMHeadModel
     - 修改forward，以只計算title的loss
         ```python
+            # make sure title_id [TIL] = 21128
             mask = torch.where(input_ids == 21128, 1, 0)
             idx = (mask == torch.tensor(1)).nonzero().tolist()
             for ind in idx:
@@ -34,7 +35,7 @@
             loss = loss / num
         ```
  
-3. config
+3. run_clm_config.json
 
     - "model_name_or_path": "ckiplab/gpt2-base-chinese",
     - "tokenizer": "bert-base-chinese",
